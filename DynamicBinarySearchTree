@@ -1,0 +1,72 @@
+"```python
+class TreeNode:
+    def __init__(self, key, left=None, right=None):
+        self.key = key
+        self.left = left
+        self.right = right
+
+class DynamicBinarySearchTree:
+    def __init__(self):
+        self.root = None
+
+    def insert(self, key):
+        if not self.root:
+            self.root = TreeNode(key)
+        else:
+            self._insert_recursively(self.root, key)
+        
+    def _insert_recursively(self, node, key):
+        if key < node.key:
+            if node.left:
+                self._insert_recursively(node.left, key)
+            else:
+                node.left = TreeNode(key)
+        else:
+            if node.right:
+                self._insert_recursively(node.right, key)
+            else:
+                node.right = TreeNode(key)
+
+    def inorder_traversal(self):
+        return self._inorder_traversal_recursively(self.root)
+
+    def _inorder_traversal_recursively(self, node):
+        if not node:
+            return []
+        
+        left_values = self._inorder_traversal_recursively(node.left)
+        right_values = self._inorder_traversal_recursively(node.right)
+        
+        return left_values + [node.key] + right_values
+
+    def find(self, target):
+        return self._find_recursively(self.root, target)
+
+    def _find_recursively(self, node, target):
+        if not node:
+            return False
+
+        if node.key == target:
+            return True
+
+        if target < node.key:
+            return self._find_recursively(node.left, target)
+        else:
+            return self._find_recursively(node.right, target)
+
+if __name__ == ""__main__"":
+    bst = DynamicBinarySearchTree()
+    bst.insert(50)
+    bst.insert(30)
+    bst.insert(20)
+    bst.insert(40)
+    bst.insert(70)
+    bst.insert(60)
+    bst.insert(80)
+
+    print(""Inorder traversal of the given tree"")
+    print(bst.inorder_traversal())
+
+    print(""\nFind 60 in the tree"")
+    print(bst.find(60))
+```"
